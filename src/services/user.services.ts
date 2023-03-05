@@ -1,7 +1,10 @@
 import { AppDataSource } from "../data-source";
 import { User } from "../entities";
 import { compare, hash } from "bcryptjs";
-import { createUserInterface, userRepo } from "../interfaces";
+import { createUserInterface, loginInterface, userRepo } from "../interfaces";
+import { AppError } from "../errors";
+import { sign } from "jsonwebtoken";
+import "dotenv/config";
 
 const insertUserService = async (newUserData: createUserInterface) => {
   const userRepository: userRepo = AppDataSource.getRepository(User);
@@ -20,6 +23,33 @@ const insertUserService = async (newUserData: createUserInterface) => {
   return createdUser;
 };
 
+const loginService = async (loginData: loginInterface) => {
+  const userRepository = AppDataSource.getRepository(User);
+
+  const { email: loginEmail, password: loginPassword } = loginData;
+
+  const userWithLoginEmail = await userRepository.findOneBy({
+    email: loginEmail,
+  });
+
+  const emailWasNotFound = !userWithLoginEmail;
+  const passwordIsWrong = !(await compare(
+    loginPassword,
+    String(userWithLoginEmail?.password)
+  ));
+
+  if (emailWasNotFound || passwordIsWrong) {
+    throw new AppError(401, "Invalid credentials");
+  }
+
+  const token = sign({ email: loginEmail }, String(process.env.SECRET_KEY), {
+    expiresIn: process.env.EXPIRES_IN,
+    subject: loginEmail,
+  });
+
+  return { token };
+};
+
 const findUserByEmailService = async (searchedEmail: string) => {
   const userRepository: userRepo = AppDataSource.getRepository(User);
 
@@ -30,4 +60,4 @@ const findUserByEmailService = async (searchedEmail: string) => {
   return userWasFound;
 };
 
-export { insertUserService, findUserByEmailService };
+export { insertUserService, findUserByEmailService, loginService };
