@@ -11,10 +11,12 @@ const findUserByEmailMiddleware = async (
 ) => {
   const searchedEmail = request.body.email;
 
-  const userWasFound = await findUserByEmailService(searchedEmail);
+  if (searchedEmail) {
+    const userWasFound = await findUserByEmailService(searchedEmail);
 
-  if (userWasFound) {
-    throw new AppError(409, "Email already exists");
+    if (userWasFound) {
+      throw new AppError(409, "Email already exists");
+    }
   }
 
   return next();
