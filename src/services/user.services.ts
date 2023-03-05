@@ -1,7 +1,12 @@
 import { AppDataSource } from "../data-source";
 import { User } from "../entities";
 import { compare, hash } from "bcryptjs";
-import { createUserInterface, loginInterface, userRepo } from "../interfaces";
+import {
+  createUserInterface,
+  loginInterface,
+  updateUserInterface,
+  userRepo,
+} from "../interfaces";
 import { AppError } from "../errors";
 import { sign } from "jsonwebtoken";
 import "dotenv/config";
@@ -23,6 +28,21 @@ const insertUserService = async (newUserData: createUserInterface) => {
   const { password, ...userWithoutPassword } = createdUser.raw;
 
   return userWithoutPassword;
+};
+
+const updateUserService = async (
+  updatedUserId: number,
+  updatedUserData: updateUserInterface
+) => {
+  const userRepository: userRepo = AppDataSource.getRepository(User);
+
+  const updatedDataWithId = { id: updatedUserId, ...updatedUserData };
+
+  await userRepository.save(updatedDataWithId);
+
+  const userAfterUpdate = await userRepository.findOneBy({ id: updatedUserId });
+
+  return userAfterUpdate;
 };
 
 const loginService = async (loginData: loginInterface) => {
@@ -66,7 +86,15 @@ const getAllUsersService = async () => {
   const userRepository: userRepo = AppDataSource.getRepository(User);
 
   const allUsers = await userRepository.find({
-    select: ["name", "email", "admin", "createdAt", "updatedAt", "deletedAt"],
+    select: [
+      "id",
+      "name",
+      "email",
+      "admin",
+      "createdAt",
+      "updatedAt",
+      "deletedAt",
+    ],
   });
 
   return allUsers;
@@ -74,7 +102,8 @@ const getAllUsersService = async () => {
 
 export {
   insertUserService,
-  findUserByEmailService,
+  updateUserService,
   loginService,
+  findUserByEmailService,
   getAllUsersService,
 };
