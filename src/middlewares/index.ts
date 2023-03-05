@@ -1,7 +1,10 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodTypeAny } from "zod";
 import { validateDate, validateTime } from "./schendule.middlewares";
-import { findUserByEmailMiddleware } from "./user.middlewares";
+import {
+  findUserByEmailMiddleware,
+  findUserByIdMiddleware,
+} from "./user.middlewares";
 
 const validateBodyMiddleware =
   (schema: ZodTypeAny) =>
@@ -20,4 +23,5 @@ export {
   validateDate,
   validateTime,
   findUserByEmailMiddleware,
+  findUserByIdMiddleware,
 };

@@ -45,4 +45,4 @@ const findUserByIdMiddleware = async (
 
 //middleware que checa se o dado alterado é do próprio usuário
 
-export { findUserByEmailMiddleware };
+export { findUserByEmailMiddleware, findUserByIdMiddleware };
