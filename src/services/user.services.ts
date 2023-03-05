@@ -15,4 +15,14 @@ const insertUserService = async (newUserData: createUserInterface) => {
   return createdUser;
 };
 
-export { insertUserService };
+const findUserByEmailService = async (searchedEmail: string) => {
+  const userRepository: userRepo = AppDataSource.getRepository(User);
+
+  const foundUser = await userRepository.findOneBy({ email: searchedEmail });
+
+  const userWasFound = foundUser !== null;
+
+  return userWasFound;
+};
+
+export { insertUserService, findUserByEmailService };
