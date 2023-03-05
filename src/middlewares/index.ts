@@ -4,7 +4,7 @@ import { validateDate, validateTime } from "./schendule.middlewares";
 import {
   findUserByEmailMiddleware,
   findUserByIdMiddleware,
-  validateToken,
+  validateTokenMiddleware,
 } from "./user.middlewares";
 
 const validateBodyMiddleware =
@@ -25,5 +25,5 @@ export {
   validateTime,
   findUserByEmailMiddleware,
   findUserByIdMiddleware,
-  validateToken,
+  validateTokenMiddleware,
 };

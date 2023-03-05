@@ -90,9 +90,7 @@ const findUserByEmailService = async (searchedEmail: string) => {
 
   const foundUser = await userRepository.findOneBy({ email: searchedEmail });
 
-  const userWasFound = foundUser !== null;
-
-  return userWasFound;
+  return foundUser;
 };
 
 const findUserByIdService = async (searchedId: number) => {

@@ -5,8 +5,10 @@ import { createSchenduleInterface } from "./schendule.interfaces";
 import {
   createUserInterface,
   updateUserInterface,
+  selectUserInterface,
   loginInterface,
-  userRepo
+  token,
+  userRepo,
 } from "./user.interfaces";
 
 export {
@@ -16,6 +18,8 @@ export {
   createSchenduleInterface,
   createUserInterface,
   updateUserInterface,
+  selectUserInterface,
   loginInterface,
-  userRepo
+  token,
+  userRepo,
 };

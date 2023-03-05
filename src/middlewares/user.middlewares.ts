@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { JwtPayload, verify, VerifyErrors } from "jsonwebtoken";
 import { AppError } from "../errors";
+import { token } from "../interfaces";
 import { findUserByEmailService, findUserByIdService } from "../services";
 
 const findUserByEmailMiddleware = async (
@@ -40,7 +41,7 @@ const findUserByIdMiddleware = async (
   return next();
 };
 
-const validateToken = async (
+const validateTokenMiddleware = async (
   request: Request,
   response: Response,
   next: NextFunction
@@ -66,15 +67,29 @@ const validateToken = async (
         throw new AppError(401, error.message);
       }
 
+      decoded = decoded as token;
+
+      const foundUser = await findUserByEmailService(decoded?.email);
+
+      request.loggedUser = foundUser;
+
       return next();
     }
   );
 };
 
-//middleware de validação de token
+const checkUserPermission = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {};
 
 //middleware de validação de admin
 
 //middleware que checa se o dado alterado é do próprio usuário
 
-export { findUserByEmailMiddleware, findUserByIdMiddleware, validateToken };
+export {
+  findUserByEmailMiddleware,
+  findUserByIdMiddleware,
+  validateTokenMiddleware,
+};
