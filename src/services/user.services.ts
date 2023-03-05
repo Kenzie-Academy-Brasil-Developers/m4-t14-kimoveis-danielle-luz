@@ -1,9 +1,14 @@
 import { AppDataSource } from "../data-source";
 import { User } from "../entities";
+import { compare, hash } from "bcryptjs";
 import { createUserInterface, userRepo } from "../interfaces";
 
 const insertUserService = async (newUserData: createUserInterface) => {
   const userRepository: userRepo = AppDataSource.getRepository(User);
+
+  const encryptedPassword = await hash(newUserData.password, 10);
+
+  newUserData = { ...newUserData, password: encryptedPassword };
 
   const createdUser = await userRepository
     .createQueryBuilder()
