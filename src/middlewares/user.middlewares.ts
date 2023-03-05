@@ -1,4 +1,5 @@
 import { NextFunction, Request, Response } from "express";
+import { JwtPayload, verify, VerifyErrors } from "jsonwebtoken";
 import { AppError } from "../errors";
 import { findUserByEmailService, findUserByIdService } from "../services";
 
@@ -39,10 +40,41 @@ const findUserByIdMiddleware = async (
   return next();
 };
 
+const validateToken = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  const tokenWithBearer = request.headers?.authorization;
+
+  const tokenWasNotSent = !tokenWithBearer;
+
+  if (tokenWasNotSent) {
+    throw new AppError(401, "Missing Bearer Token");
+  }
+
+  const token = String(tokenWithBearer).split(" ")[1];
+
+  return verify(
+    token,
+    String(process.env.SECRET_KEY),
+    async (
+      error: VerifyErrors | null,
+      decoded: string | JwtPayload | undefined
+    ) => {
+      if (error) {
+        throw new AppError(401, error.message);
+      }
+
+      return next();
+    }
+  );
+};
+
 //middleware de validação de token
 
-//middleware de validação de permissão
+//middleware de validação de admin
 
 //middleware que checa se o dado alterado é do próprio usuário
 
-export { findUserByEmailMiddleware, findUserByIdMiddleware };
+export { findUserByEmailMiddleware, findUserByIdMiddleware, validateToken };
