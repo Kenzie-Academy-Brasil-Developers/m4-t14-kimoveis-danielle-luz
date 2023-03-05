@@ -8,12 +8,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
-import { nullable } from "zod";
-import { Address } from "./Address";
-import { Category } from "./Category";
-import { Schendule } from "./Schendule";
+import { Address } from "./address.entity";
+import { Category } from "./category.entity";
+import { Schedule } from "./schedule.entity";
 
-@Entity("real_state")
+@Entity()
 class RealEstate {
   @PrimaryGeneratedColumn()
   id: number;
@@ -22,7 +21,7 @@ class RealEstate {
   sold: boolean;
 
   @Column({ type: "decimal", precision: 12, scale: 2 })
-  value: number;
+  value: number | string;
 
   @Column({ type: "integer" })
   size: number;
@@ -39,8 +38,8 @@ class RealEstate {
   @OneToOne(() => Address)
   address: Address;
 
-  @OneToMany(() => Schendule, (schendule) => schendule.realEstate)
-  schendules: Schendule[];
+  @OneToMany(() => Schedule, (schedule) => schedule.realEstate)
+  schedules: Schedule[];
 }
 
 export { RealEstate };

@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodTypeAny } from "zod";
-import { validateDate, validateTime } from "./schendule.middlewares";
+import { validateDate, validateTime } from "./schedule.middlewares";
 import {
   findUserByEmailMiddleware,
   findUserByIdMiddleware,
   validateTokenMiddleware,
   userIsAdminMiddleware,
-  checkUpdatePermission
+  checkUpdatePermission,
 } from "./user.middlewares";
 
 const validateBodyMiddleware =

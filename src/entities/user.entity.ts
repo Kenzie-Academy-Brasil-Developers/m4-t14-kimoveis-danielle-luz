@@ -7,7 +7,7 @@ import {
   UpdateDateColumn,
 } from "typeorm";
 
-@Entity("users")
+@Entity()
 class User {
   @PrimaryGeneratedColumn()
   id: number;
@@ -34,4 +34,4 @@ class User {
   deletedAt: Date;
 }
 
-export default User;
+export { User };

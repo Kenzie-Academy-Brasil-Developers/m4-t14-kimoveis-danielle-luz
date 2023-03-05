@@ -4,13 +4,13 @@ import "reflect-metadata";
 import { DataSource, DataSourceOptions } from "typeorm";
 
 const dataSourceConfig = ((): DataSourceOptions => {
-  const entitiesPath = path.join(__dirname, "./entities/**.{js,ts}");
+  const entitiesPath = path.join(__dirname, "./entities/**.{ts,js}");
   const migrationsPath = path.join(__dirname, "./migrations/**.{ts,js}");
 
   if (!process.env.DATABASE_URL)
     throw new Error("Database URL must be informed");
 
-  if (process.env.NODE_DEV === "test") {
+  if (process.env.NODE_ENV === "test") {
     return {
       type: "sqlite",
       database: ":memory:",

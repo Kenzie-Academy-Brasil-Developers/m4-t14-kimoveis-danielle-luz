@@ -1,9 +1,9 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { RealEstate } from "./RealEstate";
-import User from "./User";
+import { RealEstate } from "./realEstate.entity";
+import { User } from "./user.entity";
 
-@Entity("schendules_users_properties")
-class Schendule {
+@Entity()
+class Schedule {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,4 +20,4 @@ class Schendule {
   realEstate: RealEstate;
 }
 
-export { Schendule };
+export { Schedule };
