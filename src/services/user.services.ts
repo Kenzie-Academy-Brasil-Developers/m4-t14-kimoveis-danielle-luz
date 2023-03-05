@@ -62,4 +62,19 @@ const findUserByEmailService = async (searchedEmail: string) => {
   return userWasFound;
 };
 
-export { insertUserService, findUserByEmailService, loginService };
+const getAllUsersService = async () => {
+  const userRepository: userRepo = AppDataSource.getRepository(User);
+
+  const allUsers = await userRepository.find({
+    select: ["name", "email", "admin", "createdAt", "updatedAt", "deletedAt"],
+  });
+
+  return allUsers;
+};
+
+export {
+  insertUserService,
+  findUserByEmailService,
+  loginService,
+  getAllUsersService,
+};
