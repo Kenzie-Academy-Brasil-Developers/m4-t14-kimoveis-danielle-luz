@@ -20,7 +20,9 @@ const insertUserService = async (newUserData: createUserInterface) => {
     .values(newUserData)
     .execute();
 
-  return createdUser;
+  const { password, ...userWithoutPassword } = createdUser.raw;
+
+  return userWithoutPassword;
 };
 
 const loginService = async (loginData: loginInterface) => {
