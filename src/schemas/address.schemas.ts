@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const createaddressSchema = z.object({
+const createAddressSchema = z.object({
   street: z.string().max(45),
   zipCode: z.string().max(8),
   number: z.string().max(6).optional(),
@@ -8,4 +8,4 @@ const createaddressSchema = z.object({
   state: z.string().max(2),
 });
 
-export { createaddressSchema };
+export { createAddressSchema };

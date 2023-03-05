@@ -1,11 +1,13 @@
-import { createCategorieSchema } from "./categorie.schema";
-import { createRealEstateSchema } from "./realEstate.schema";
-import { createSchenduleSchema } from "./schendule.schema";
-import { createUserSchema } from "./user.schema";
+import { createCategorieSchema } from "./categorie.schemas";
+import { createRealEstateSchema } from "./realEstate.schemas";
+import { createSchenduleSchema } from "./schendule.schemas";
+import { createUserSchema, updateUserSchema, loginSchema } from "./user.schemas";
 
 export {
   createCategorieSchema,
   createRealEstateSchema,
   createSchenduleSchema,
   createUserSchema,
+  updateUserSchema,
+  loginSchema
 };

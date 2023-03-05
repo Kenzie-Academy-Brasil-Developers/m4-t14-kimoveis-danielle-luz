@@ -1,10 +1,10 @@
 import { z } from "zod";
-import { createaddressSchema } from "./address.schema";
+import { createAddressSchema } from "./address.schemas";
 
 const createRealEstateSchema = z.object({
   value: z.number(),
   size: z.number().int(),
-  address: createaddressSchema,
+  address: createAddressSchema,
   categoryId: z.number().int(),
 });
 
