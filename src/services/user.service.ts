@@ -95,6 +95,16 @@ const findUserByEmailService = async (searchedEmail: string) => {
   return userWasFound;
 };
 
+const findUserByIdService = async (searchedId: number) => {
+  const userRepository: userRepo = AppDataSource.getRepository(User);
+
+  const foundUser = await userRepository.findOneBy({ id: searchedId });
+
+  const userWasNotFound = foundUser === null;
+
+  return userWasNotFound;
+};
+
 const getAllUsersService = async () => {
   const userRepository: userRepo = AppDataSource.getRepository(User);
 
@@ -119,5 +129,6 @@ export {
   deleteUserService,
   loginService,
   findUserByEmailService,
+  findUserByIdService,
   getAllUsersService,
 };

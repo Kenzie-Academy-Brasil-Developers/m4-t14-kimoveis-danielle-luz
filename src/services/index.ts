@@ -4,14 +4,16 @@ import {
   deleteUserService,
   loginService,
   findUserByEmailService,
+  findUserByIdService,
   getAllUsersService,
-} from "./user.services";
+} from "./user.service";
 
 export {
   insertUserService,
   updateUserService,
   deleteUserService,
   findUserByEmailService,
+  findUserByIdService,
   loginService,
   getAllUsersService,
 };
