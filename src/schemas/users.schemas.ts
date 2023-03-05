@@ -9,4 +9,6 @@ const createUserSchema = z.object({
 
 const updateUserSchema = createUserSchema.omit({ admin: true });
 
-export { createUserSchema, updateUserSchema };
+const loginSchema = createUserSchema.pick({ email: true, password: true });
+
+export { createUserSchema, updateUserSchema, loginSchema };
