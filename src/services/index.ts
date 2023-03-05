@@ -1,6 +1,7 @@
 import {
   insertUserService,
   updateUserService,
+  deleteUserService,
   loginService,
   findUserByEmailService,
   getAllUsersService,
@@ -9,6 +10,7 @@ import {
 export {
   insertUserService,
   updateUserService,
+  deleteUserService,
   findUserByEmailService,
   loginService,
   getAllUsersService,

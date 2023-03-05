@@ -45,6 +45,19 @@ const updateUserService = async (
   return userAfterUpdate;
 };
 
+const deleteUserService = async (deletedUserId: number) => {
+  const userRepository: userRepo = AppDataSource.getRepository(User);
+
+  const deletedUser = await userRepository.findOne({
+    where: { id: deletedUserId },
+    withDeleted: true,
+  });
+
+  if (deletedUser) {
+    await userRepository.softRemove(deletedUser);
+  }
+};
+
 const loginService = async (loginData: loginInterface) => {
   const userRepository = AppDataSource.getRepository(User);
 
@@ -103,6 +116,7 @@ const getAllUsersService = async () => {
 export {
   insertUserService,
   updateUserService,
+  deleteUserService,
   loginService,
   findUserByEmailService,
   getAllUsersService,
