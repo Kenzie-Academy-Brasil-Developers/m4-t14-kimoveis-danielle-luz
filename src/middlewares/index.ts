@@ -5,6 +5,8 @@ import {
   findUserByEmailMiddleware,
   findUserByIdMiddleware,
   validateTokenMiddleware,
+  userIsAdminMiddleware,
+  checkUpdatePermission
 } from "./user.middlewares";
 
 const validateBodyMiddleware =
@@ -26,4 +28,6 @@ export {
   findUserByEmailMiddleware,
   findUserByIdMiddleware,
   validateTokenMiddleware,
+  userIsAdminMiddleware,
+  checkUpdatePermission,
 };

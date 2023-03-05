@@ -78,18 +78,42 @@ const validateTokenMiddleware = async (
   );
 };
 
-const checkUserPermission = async (
+const userIsAdminMiddleware = async (
   request: Request,
   response: Response,
   next: NextFunction
-) => {};
+) => {
+  const userIsNotAdmin = !request.loggedUser?.admin;
 
-//middleware de validação de admin
+  if (userIsNotAdmin) {
+    throw new AppError(403, "Insufficient permission");
+  }
 
-//middleware que checa se o dado alterado é do próprio usuário
+  return next();
+};
+
+const checkUpdatePermission = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  const updatedUserId = parseInt(request.params.id);
+
+  const loggedUserHasSameId = request.loggedUser?.id === updatedUserId;
+
+  const isAdmin = request.loggedUser?.admin;
+
+  if (!loggedUserHasSameId && !isAdmin) {
+    throw new AppError(403, "Insufficient permission");
+  }
+
+  return next();
+};
 
 export {
   findUserByEmailMiddleware,
   findUserByIdMiddleware,
   validateTokenMiddleware,
+  checkUpdatePermission,
+  userIsAdminMiddleware,
 };
