@@ -6,6 +6,7 @@ import {
   createUserInterface,
   updateUserInterface,
   loginInterface,
+  userRepo
 } from "./user.interfaces";
 
 export {
@@ -16,4 +17,5 @@ export {
   createUserInterface,
   updateUserInterface,
   loginInterface,
+  userRepo
 };
