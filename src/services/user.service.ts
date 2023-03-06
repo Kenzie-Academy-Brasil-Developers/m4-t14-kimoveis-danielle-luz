@@ -67,11 +67,13 @@ const loginService = async (loginData: loginInterface) => {
     email: loginEmail,
   });
 
+  const foundUserPassword = String(userWithLoginEmail?.password);
+
   const emailWasNotFound = !userWithLoginEmail;
-  const passwordIsWrong = !(await compare(
-    loginPassword,
-    String(userWithLoginEmail?.password)
-  ));
+  const passwordIsWrong = !(
+    (await compare(loginPassword, foundUserPassword)) ||
+    loginPassword === foundUserPassword
+  );
 
   if (emailWasNotFound || passwordIsWrong) {
     throw new AppError(401, "Invalid credentials");
