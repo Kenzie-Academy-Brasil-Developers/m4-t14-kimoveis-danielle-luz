@@ -12,7 +12,7 @@ import { Address } from "./address.entity";
 import { Category } from "./category.entity";
 import { Schedule } from "./schedule.entity";
 
-@Entity()
+@Entity("real_estate")
 class RealEstate {
   @PrimaryGeneratedColumn()
   id: number;
