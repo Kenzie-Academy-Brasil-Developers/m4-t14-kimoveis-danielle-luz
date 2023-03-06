@@ -33,9 +33,9 @@ usersRouter.get(
 
 usersRouter.patch(
   "/:id",
+  findUserByIdMiddleware,
   validateTokenMiddleware,
   checkUpdatePermission,
-  findUserByIdMiddleware,
   validateBodyMiddleware(updateUserSchema),
   findUserByEmailMiddleware,
   updateUserController

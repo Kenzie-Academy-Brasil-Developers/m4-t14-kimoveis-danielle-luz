@@ -17,7 +17,7 @@ const createUserSchema = getUserSchema.pick({
   admin: true,
 });
 
-const updateUserSchema = createUserSchema.omit({ admin: true });
+const updateUserSchema = createUserSchema.omit({ admin: true }).partial();
 
 const loginSchema = createUserSchema.pick({ email: true, password: true });
 

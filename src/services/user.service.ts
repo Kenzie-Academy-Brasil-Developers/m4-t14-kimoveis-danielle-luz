@@ -38,7 +38,7 @@ const updateUserService = async (
 
   const updatedDataWithId = { id: updatedUserId, ...updatedUserData };
 
-  await userRepository.save(updatedDataWithId);
+  await userRepository.save(updatedDataWithId as User);
 
   const userAfterUpdate = await userRepository.findOneBy({ id: updatedUserId });
 
