@@ -3,6 +3,7 @@ import { User } from "../entities";
 import { compare, hash } from "bcryptjs";
 import {
   createUserInterface,
+  getUserInterface,
   loginInterface,
   updateUserInterface,
   userRepo,
@@ -25,7 +26,7 @@ const insertUserService = async (newUserData: createUserInterface) => {
     .values(newUserData)
     .execute();
 
-  const { password, ...userWithoutPassword } = createdUser.raw;
+  let { password, ...userWithoutPassword } = createdUser.raw;
 
   return userWithoutPassword;
 };
@@ -79,7 +80,7 @@ const loginService = async (loginData: loginInterface) => {
 
   const token = sign({ email: loginEmail }, String(process.env.SECRET_KEY), {
     expiresIn: process.env.EXPIRES_IN,
-    subject: loginEmail,
+    subject: String(userWithLoginEmail.id),
   });
 
   return { token };
@@ -98,15 +99,13 @@ const findUserByIdService = async (searchedId: number) => {
 
   const foundUser = await userRepository.findOneBy({ id: searchedId });
 
-  const userWasNotFound = foundUser === null;
-
-  return userWasNotFound;
+  return foundUser;
 };
 
 const getAllUsersService = async () => {
   const userRepository: userRepo = AppDataSource.getRepository(User);
 
-  const allUsers = await userRepository.find({
+  let allUsers = await userRepository.find({
     select: [
       "id",
       "name",
