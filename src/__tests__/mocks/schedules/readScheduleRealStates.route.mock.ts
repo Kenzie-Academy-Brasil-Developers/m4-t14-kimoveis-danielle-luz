@@ -1,12 +1,12 @@
-import { Repository } from 'typeorm';
-import { AppDataSource } from '../../../data-source';
+import { Repository } from "typeorm";
+import { AppDataSource } from "../../../../data-source";
 import {
   Address,
   Category,
   RealEstate,
   Schedule,
   User,
-} from '../../../entities';
+} from "../../../entities";
 
 type iRealEstateRepo = Repository<RealEstate>;
 type iAddressRepo = Repository<Address>;
@@ -23,26 +23,26 @@ const manySchedules = async () => {
   const scheduleRepo: iScheduleRepo = AppDataSource.getRepository(Schedule);
 
   const userAdmin = userRepo.create({
-    name: 'admin',
-    email: 'admin@mail.com',
-    password: '1234',
+    name: "admin",
+    email: "admin@mail.com",
+    password: "1234",
     admin: true,
   });
 
   const userNotAdmin = userRepo.create({
-    name: 'user',
-    email: 'user@mail.com',
-    password: '1234',
+    name: "user",
+    email: "user@mail.com",
+    password: "1234",
   });
 
   await userRepo.save([userAdmin, userNotAdmin]);
 
-  const category = await categoryRepo.save({ name: 'Apartamento' });
+  const category = await categoryRepo.save({ name: "Apartamento" });
   const address = await addressRepo.save({
-    city: 'São Paulo',
-    street: 'Rua das Rosas',
-    state: 'SP',
-    zipCode: '000000011',
+    city: "São Paulo",
+    street: "Rua das Rosas",
+    state: "SP",
+    zipCode: "000000011",
   });
 
   const realEstate = await realEstateRepo.save({
@@ -55,14 +55,14 @@ const manySchedules = async () => {
   const schedule1 = await scheduleRepo.save({
     realEstate,
     user: userAdmin,
-    date: '2022-03-01',
-    hour: '12:30:00',
+    date: "2022-03-01",
+    hour: "12:30:00",
   });
   const schedule2 = await scheduleRepo.save({
     realEstate,
     user: userNotAdmin,
-    date: '2022-03-01',
-    hour: '13:30:00',
+    date: "2022-03-01",
+    hour: "13:30:00",
   });
 
   return {

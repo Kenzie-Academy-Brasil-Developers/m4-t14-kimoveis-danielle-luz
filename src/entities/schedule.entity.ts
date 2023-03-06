@@ -2,12 +2,12 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { RealEstate } from "./realEstate.entity";
 import { User } from "./user.entity";
 
-@Entity()
+@Entity("schedules_users_properties")
 class Schedule {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: "datetime" })
+  @Column({ type: "time" })
   date: string;
 
   @Column({ type: "time" })
