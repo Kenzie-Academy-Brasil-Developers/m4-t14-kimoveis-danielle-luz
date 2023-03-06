@@ -42,7 +42,9 @@ const updateUserService = async (
 
   const userAfterUpdate = await userRepository.findOneBy({ id: updatedUserId });
 
-  return userAfterUpdate;
+  const { password, ...userWithoutPassword } = userAfterUpdate as User;
+
+  return userWithoutPassword;
 };
 
 const deleteUserService = async (deletedUserId: number) => {
