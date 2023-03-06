@@ -3,7 +3,6 @@ import { User } from "../entities";
 import { compare, hash } from "bcryptjs";
 import {
   createUserInterface,
-  getUserInterface,
   loginInterface,
   updateUserInterface,
   userRepo,
@@ -26,7 +25,7 @@ const insertUserService = async (newUserData: createUserInterface) => {
     .values(newUserData)
     .execute();
 
-  let { password, ...userWithoutPassword } = createdUser.raw;
+  let { password, ...userWithoutPassword } = createdUser.raw[0];
 
   return userWithoutPassword;
 };
@@ -107,13 +106,13 @@ const getAllUsersService = async () => {
 
   let allUsers = await userRepository.find({
     select: [
-      "id",
-      "name",
-      "email",
       "admin",
       "createdAt",
-      "updatedAt",
       "deletedAt",
+      "email",
+      "id",
+      "name",
+      "updatedAt",
     ],
   });
 
