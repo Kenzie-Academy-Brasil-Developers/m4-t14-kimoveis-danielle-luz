@@ -43,10 +43,17 @@ const getPropertiesByCategoryService = async (categoryId: number) => {
   }
 };
 
-const getCategoryById = (categoryId: number) => {};
+const getCategoryByNameService = async (categoryName: string) => {
+  const categoryRepo: categoryRepo = AppDataSource.getRepository(Category);
+
+  const foundCategory = await categoryRepo.findOneBy({ name: categoryName });
+
+  return foundCategory;
+};
 
 export {
   insertCategoryService,
   getAllCategoriesService,
   getPropertiesByCategoryService,
+  getCategoryByNameService,
 };
