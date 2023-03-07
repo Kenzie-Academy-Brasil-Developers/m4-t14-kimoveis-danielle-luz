@@ -4,6 +4,10 @@ import {
   insertCategoryController,
 } from "./category.controller";
 import {
+  getAllRealEstateController,
+  insertRealEstateController,
+} from "./realEstate.controller";
+import {
   insertUserController,
   updateUserController,
   deleteUserController,
@@ -20,4 +24,6 @@ export {
   insertCategoryController,
   getAllCategoriesController,
   getPropertiesByCategoryController,
+  insertRealEstateController,
+  getAllRealEstateController,
 };
