@@ -1,5 +1,6 @@
 import { AppDataSource } from "../../data-source";
 import { Category } from "../entities";
+import { AppError } from "../errors";
 import { categoryRepo, createCategorieInterface } from "../interfaces";
 
 const insertCategoryService = async (
@@ -27,14 +28,22 @@ const getAllCategoriesService = async () => {
 const getPropertiesByCategoryService = async (categoryId: number) => {
   const categoryRepo: categoryRepo = AppDataSource.getRepository(Category);
 
-  const propertiesWithCategory = (
-    await categoryRepo.findOneBy({
-      id: categoryId,
-    })
-  )?.properties;
+  try {
+    if (isNaN(categoryId)) throw new Error();
 
-  return propertiesWithCategory;
+    const propertiesWithCategory = (
+      await categoryRepo.findOneByOrFail({
+        id: categoryId,
+      })
+    )?.properties;
+
+    return propertiesWithCategory;
+  } catch {
+    throw new AppError(404, "Category not found");
+  }
 };
+
+const getCategoryById = (categoryId: number) => {};
 
 export {
   insertCategoryService,
