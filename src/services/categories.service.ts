@@ -8,13 +8,17 @@ const insertCategoryService = async (
 ) => {
   const categoryRepo: categoryRepo = AppDataSource.getRepository(Category);
 
-  const createdCategory = await categoryRepo
+  await categoryRepo
     .createQueryBuilder()
     .insert()
     .values(newCategoryData)
     .execute();
 
-  return createdCategory.generatedMaps[0];
+  const foundCategory = await categoryRepo.findOneBy({
+    name: newCategoryData.name,
+  });
+
+  return foundCategory;
 };
 
 const getAllCategoriesService = async () => {

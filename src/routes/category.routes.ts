@@ -4,11 +4,21 @@ import {
   getPropertiesByCategoryController,
   insertCategoryController,
 } from "../controllers";
-import { findCategoryByName } from "../middlewares";
+import {
+  findCategoryByNameMiddleware,
+  userIsAdminMiddleware,
+  validateTokenMiddleware,
+} from "../middlewares";
 
 const categoriesRouter = Router();
 
-categoriesRouter.post("", findCategoryByName, insertCategoryController);
+categoriesRouter.post(
+  "",
+  validateTokenMiddleware,
+  userIsAdminMiddleware,
+  findCategoryByNameMiddleware,
+  insertCategoryController
+);
 
 categoriesRouter.get("", getAllCategoriesController);
 

@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { AppError } from "../errors";
 import { getCategoryByNameService } from "../services";
 
-const findCategoryByName = async (
+const findCategoryByNameMiddleware = async (
   request: Request,
   response: Response,
   next: NextFunction
@@ -18,4 +18,4 @@ const findCategoryByName = async (
   return next();
 };
 
-export { findCategoryByName };
+export { findCategoryByNameMiddleware };
