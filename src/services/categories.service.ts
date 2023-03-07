@@ -24,7 +24,7 @@ const getAllCategoriesService = async () => {
   return allCategories;
 };
 
-const getPropertiesByCategory = async (categoryId: number) => {
+const getPropertiesByCategoryService = async (categoryId: number) => {
   const categoryRepo: categoryRepo = AppDataSource.getRepository(Category);
 
   const propertiesWithCategory = (
@@ -39,5 +39,5 @@ const getPropertiesByCategory = async (categoryId: number) => {
 export {
   insertCategoryService,
   getAllCategoriesService,
-  getPropertiesByCategory,
+  getPropertiesByCategoryService,
 };

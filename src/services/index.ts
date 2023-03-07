@@ -1,6 +1,6 @@
 import {
   getAllCategoriesService,
-  getPropertiesByCategory,
+  getPropertiesByCategoryService,
   insertCategoryService,
 } from "./categories.service";
 import {
@@ -23,5 +23,5 @@ export {
   getAllUsersService,
   insertCategoryService,
   getAllCategoriesService,
-  getPropertiesByCategory,
+  getPropertiesByCategoryService,
 };
