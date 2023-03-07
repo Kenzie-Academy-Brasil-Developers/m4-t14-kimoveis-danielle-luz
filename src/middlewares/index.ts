@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodTypeAny } from "zod";
+import { findCategoryByNameMiddleware } from "./category.middleware";
 import { validateDate, validateTime } from "./schedule.middlewares";
 import {
   findUserByEmailMiddleware,
@@ -30,4 +31,5 @@ export {
   validateTokenMiddleware,
   userIsAdminMiddleware,
   checkUpdatePermission,
+  findCategoryByNameMiddleware,
 };

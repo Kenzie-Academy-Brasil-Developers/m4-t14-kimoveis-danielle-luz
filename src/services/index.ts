@@ -1,4 +1,10 @@
 import {
+  getAllCategoriesService,
+  getCategoryByNameService,
+  getPropertiesByCategoryService,
+  insertCategoryService,
+} from "./categories.service";
+import {
   insertUserService,
   updateUserService,
   deleteUserService,
@@ -16,4 +22,8 @@ export {
   findUserByIdService,
   loginService,
   getAllUsersService,
+  insertCategoryService,
+  getAllCategoriesService,
+  getPropertiesByCategoryService,
+  getCategoryByNameService,
 };
