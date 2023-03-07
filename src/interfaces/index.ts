@@ -3,6 +3,7 @@ import { createCategorieInterface } from "./categorie.interfaces";
 import { createRealEstateInterface } from "./realEstate.interfaces";
 import { createScheduleInterface } from "./schedule.interfaces";
 import {
+  getUserInterface,
   createUserInterface,
   updateUserInterface,
   selectUserInterface,
@@ -16,6 +17,7 @@ export {
   createCategorieInterface,
   createRealEstateInterface,
   createScheduleInterface,
+  getUserInterface,
   createUserInterface,
   updateUserInterface,
   selectUserInterface,

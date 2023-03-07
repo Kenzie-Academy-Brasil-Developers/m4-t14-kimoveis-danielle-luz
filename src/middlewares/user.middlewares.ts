@@ -53,7 +53,7 @@ const validateTokenMiddleware = async (
   const tokenWasNotSent = !tokenWithBearer;
 
   if (tokenWasNotSent) {
-    throw new AppError(401, "Missing Bearer Token");
+    throw new AppError(401, "Missing bearer token");
   }
 
   const token = String(tokenWithBearer).split(" ")[1];
@@ -67,15 +67,19 @@ const validateTokenMiddleware = async (
     ) => {
       if (error) {
         throw new AppError(401, error.message);
+      } else if (decoded) {
+        decoded = decoded as token;
+
+        const foundUser = await findUserByIdService(
+          parseInt(decoded.sub as string)
+        );
+
+        request.loggedUser = foundUser;
+
+        request.isAdmin = request.loggedUser?.admin || decoded?.admin;
+
+        return next();
       }
-
-      decoded = decoded as token;
-
-      const foundUser = await findUserByEmailService(decoded?.email);
-
-      request.loggedUser = foundUser;
-
-      return next();
     }
   );
 };
@@ -85,9 +89,7 @@ const userIsAdminMiddleware = async (
   response: Response,
   next: NextFunction
 ) => {
-  const userIsNotAdmin = !request.loggedUser?.admin;
-
-  if (userIsNotAdmin) {
+  if (!request.isAdmin) {
     throw new AppError(403, "Insufficient permission");
   }
 

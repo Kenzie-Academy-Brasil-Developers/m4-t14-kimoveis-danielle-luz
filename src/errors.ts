@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodError } from "zod";
+import "express-async-errors";
 
 class AppError extends Error {
   statusCode: number;
@@ -18,7 +19,7 @@ const errorHandler = (
   next: NextFunction
 ) => {
   if (error instanceof AppError) {
-    return response.status(error.statusCode).send(error.message);
+    return response.status(error.statusCode).send({ message: error.message });
   } else if (error instanceof ZodError) {
     return response.status(400).send({ message: error.flatten().fieldErrors });
   } else if (error) {

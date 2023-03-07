@@ -33,9 +33,9 @@ usersRouter.get(
 
 usersRouter.patch(
   "/:id",
+  findUserByIdMiddleware,
   validateTokenMiddleware,
   checkUpdatePermission,
-  findUserByIdMiddleware,
   validateBodyMiddleware(updateUserSchema),
   findUserByEmailMiddleware,
   updateUserController
@@ -43,9 +43,9 @@ usersRouter.patch(
 
 usersRouter.delete(
   "/:id",
+  findUserByIdMiddleware,
   validateTokenMiddleware,
   userIsAdminMiddleware,
-  findUserByIdMiddleware,
   deleteUserController
 );
 

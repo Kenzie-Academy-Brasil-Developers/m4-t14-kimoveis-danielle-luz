@@ -18,14 +18,18 @@ const insertUserService = async (newUserData: createUserInterface) => {
 
   newUserData = { ...newUserData, password: encryptedPassword };
 
-  const createdUser = await userRepository
+  await userRepository
     .createQueryBuilder()
     .insert()
     .into(User)
     .values(newUserData)
     .execute();
 
-  const { password, ...userWithoutPassword } = createdUser.raw;
+  const userAfterInsert = await userRepository.findOneBy({
+    email: newUserData.email,
+  });
+
+  const { password, ...userWithoutPassword } = userAfterInsert as User;
 
   return userWithoutPassword;
 };
@@ -38,11 +42,13 @@ const updateUserService = async (
 
   const updatedDataWithId = { id: updatedUserId, ...updatedUserData };
 
-  await userRepository.save(updatedDataWithId);
+  await userRepository.save(updatedDataWithId as User);
 
   const userAfterUpdate = await userRepository.findOneBy({ id: updatedUserId });
 
-  return userAfterUpdate;
+  const { password, ...userWithoutPassword } = userAfterUpdate as User;
+
+  return userWithoutPassword;
 };
 
 const deleteUserService = async (deletedUserId: number) => {
@@ -67,11 +73,13 @@ const loginService = async (loginData: loginInterface) => {
     email: loginEmail,
   });
 
+  const foundUserPassword = String(userWithLoginEmail?.password);
+
   const emailWasNotFound = !userWithLoginEmail;
-  const passwordIsWrong = !(await compare(
-    loginPassword,
-    String(userWithLoginEmail?.password)
-  ));
+  const passwordIsWrong = !(
+    (await compare(loginPassword, foundUserPassword)) ||
+    loginPassword === foundUserPassword
+  );
 
   if (emailWasNotFound || passwordIsWrong) {
     throw new AppError(401, "Invalid credentials");
@@ -79,7 +87,7 @@ const loginService = async (loginData: loginInterface) => {
 
   const token = sign({ email: loginEmail }, String(process.env.SECRET_KEY), {
     expiresIn: process.env.EXPIRES_IN,
-    subject: loginEmail,
+    subject: String(userWithLoginEmail.id),
   });
 
   return { token };
@@ -98,23 +106,21 @@ const findUserByIdService = async (searchedId: number) => {
 
   const foundUser = await userRepository.findOneBy({ id: searchedId });
 
-  const userWasNotFound = foundUser === null;
-
-  return userWasNotFound;
+  return foundUser;
 };
 
 const getAllUsersService = async () => {
   const userRepository: userRepo = AppDataSource.getRepository(User);
 
-  const allUsers = await userRepository.find({
+  let allUsers = await userRepository.find({
     select: [
-      "id",
-      "name",
-      "email",
       "admin",
       "createdAt",
-      "updatedAt",
       "deletedAt",
+      "email",
+      "id",
+      "name",
+      "updatedAt",
     ],
   });
 
