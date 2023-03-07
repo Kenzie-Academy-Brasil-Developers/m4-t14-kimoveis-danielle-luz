@@ -18,14 +18,18 @@ const insertUserService = async (newUserData: createUserInterface) => {
 
   newUserData = { ...newUserData, password: encryptedPassword };
 
-  const createdUser = await userRepository
+  await userRepository
     .createQueryBuilder()
     .insert()
     .into(User)
     .values(newUserData)
     .execute();
 
-  let { password, ...userWithoutPassword } = createdUser.raw[0];
+  const userAfterInsert = await userRepository.findOneBy({
+    email: newUserData.email,
+  });
+
+  const { password, ...userWithoutPassword } = userAfterInsert as User;
 
   return userWithoutPassword;
 };
