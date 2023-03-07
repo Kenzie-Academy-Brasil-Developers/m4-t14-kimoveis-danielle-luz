@@ -4,7 +4,7 @@ import { errorHandler } from "./errors";
 import { validateBodyMiddleware } from "./middlewares";
 import { usersRouter } from "./routes";
 import { loginSchema } from "./schemas";
-/* import { categoriesRouter } from "./routes/categories.routes"; */
+import { categoriesRouter } from "./routes/category.routes";
 /* import { realEstateRouter } from "./routes/realEstate.routes"; */
 /* import { schedulesRouter } from "./routes/schedules.routes"; */
 
@@ -16,7 +16,8 @@ app.use(express.json());
 app.post("/login", validateBodyMiddleware(loginSchema), loginController);
 
 app.use("/users", usersRouter);
-// app.use("/categories", categoriesRouter);
+
+app.use("/categories", categoriesRouter);
 // app.use("/realEstate", realEstateRouter);
 // app.use("/schedules", schedulesRouter);
 
