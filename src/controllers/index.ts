@@ -1,4 +1,9 @@
 import {
+  getAllCategoriesController,
+  getPropertiesByCategoryController,
+  insertCategoryController,
+} from "./category.controller";
+import {
   insertUserController,
   updateUserController,
   deleteUserController,
@@ -12,4 +17,7 @@ export {
   deleteUserController,
   loginController,
   getAllUsersController,
+  insertCategoryController,
+  getAllCategoriesController,
+  getPropertiesByCategoryController,
 };
