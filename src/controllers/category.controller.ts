@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { createCategorieInterface } from "../interfaces";
 import {
+  getAllCategoriesService,
   getPropertiesByCategoryService,
   insertCategoryService,
 } from "../services";
@@ -19,7 +20,11 @@ const insertCategoryController = async (
 const getAllCategoriesController = async (
   request: Request,
   response: Response
-) => {};
+) => {
+  const allCategories = await getAllCategoriesService();
+
+  return response.status(200).send(allCategories);
+};
 
 const getPropertiesByCategoryController = async (
   request: Request,
