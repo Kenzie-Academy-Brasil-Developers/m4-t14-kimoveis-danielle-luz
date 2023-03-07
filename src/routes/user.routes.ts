@@ -43,9 +43,9 @@ usersRouter.patch(
 
 usersRouter.delete(
   "/:id",
+  findUserByIdMiddleware,
   validateTokenMiddleware,
   userIsAdminMiddleware,
-  findUserByIdMiddleware,
   deleteUserController
 );
 
