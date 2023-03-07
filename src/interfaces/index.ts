@@ -1,5 +1,5 @@
 import { createAddressInterface } from "./address.interfaces";
-import { createCategorieInterface } from "./categorie.interfaces";
+import { createCategorieInterface, categoryRepo } from "./categorie.interfaces";
 import { createRealEstateInterface } from "./realEstate.interfaces";
 import { createScheduleInterface } from "./schedule.interfaces";
 import {
@@ -15,6 +15,7 @@ import {
 export {
   createAddressInterface,
   createCategorieInterface,
+  categoryRepo,
   createRealEstateInterface,
   createScheduleInterface,
   getUserInterface,
