@@ -1,4 +1,5 @@
 import {
+  AfterLoad,
   Column,
   CreateDateColumn,
   Entity,
@@ -25,10 +26,10 @@ class RealEstate {
   @Column({ type: "integer" })
   size: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: "time" })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: "time" })
   updatedAt: Date;
 
   @ManyToOne(() => Category, { nullable: true })

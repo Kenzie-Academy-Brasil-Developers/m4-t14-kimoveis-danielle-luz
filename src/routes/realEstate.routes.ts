@@ -3,13 +3,19 @@ import {
   getAllRealEstateController,
   insertRealEstateController,
 } from "../controllers";
-import { validateBodyMiddleware } from "../middlewares";
+import {
+  userIsAdminMiddleware,
+  validateBodyMiddleware,
+  validateTokenMiddleware,
+} from "../middlewares";
 import { createRealEstateSchema } from "../schemas";
 
 const realEstateRouter = Router();
 
 realEstateRouter.post(
   "",
+  validateTokenMiddleware,
+  userIsAdminMiddleware,
   validateBodyMiddleware(createRealEstateSchema),
   insertRealEstateController
 );

@@ -2,8 +2,8 @@ import { z } from "zod";
 import { createAddressSchema } from "./address.schemas";
 
 const createRealEstateSchema = z.object({
-  value: z.number().transform((value) => String(value)),
-  size: z.number().int(),
+  value: z.number(),
+  size: z.number().int().positive(),
   address: createAddressSchema,
   categoryId: z.number().int(),
 });
