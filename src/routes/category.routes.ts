@@ -7,8 +7,10 @@ import {
 import {
   findCategoryByNameMiddleware,
   userIsAdminMiddleware,
+  validateBodyMiddleware,
   validateTokenMiddleware,
 } from "../middlewares";
+import { createCategorieSchema } from "../schemas";
 
 const categoriesRouter = Router();
 
@@ -16,6 +18,7 @@ categoriesRouter.post(
   "",
   validateTokenMiddleware,
   userIsAdminMiddleware,
+  validateBodyMiddleware(createCategorieSchema),
   findCategoryByNameMiddleware,
   insertCategoryController
 );
