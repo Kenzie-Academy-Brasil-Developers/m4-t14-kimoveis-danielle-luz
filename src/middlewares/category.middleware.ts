@@ -1,15 +1,21 @@
 import { NextFunction, Request, Response } from "express";
+import { AppError } from "../errors";
+import { getCategoryByNameService } from "../services";
 
-const findCategoryById = (
+const findCategoryByName = async (
   request: Request,
   response: Response,
   next: NextFunction
-) => {};
+) => {
+  const newCategoryName = request.body.name as string;
 
-const findCategoryByName = (
-  request: Request,
-  response: Response,
-  next: NextFunction
-) => {};
+  const foundCategory = await getCategoryByNameService(newCategoryName);
 
-export { findCategoryById, findCategoryByName };
+  if (foundCategory) {
+    throw new AppError(409, "Category already exists");
+  }
+
+  return next();
+};
+
+export { findCategoryByName };
