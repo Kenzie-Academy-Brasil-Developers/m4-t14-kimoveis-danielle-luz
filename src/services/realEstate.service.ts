@@ -19,3 +19,13 @@ const insertRealEstateService = async (
 
   return newRealEstate;
 };
+
+const getAllRealEstate = async () => {
+  const realEstateRepo = AppDataSource.getRepository(RealEstate);
+
+  const allRealEstate = await realEstateRepo.find();
+
+  return allRealEstate;
+};
+
+export { insertRealEstateService, getAllRealEstate };

@@ -5,6 +5,10 @@ import {
   insertCategoryService,
 } from "./categories.service";
 import {
+  getAllRealEstate,
+  insertRealEstateService,
+} from "./realEstate.service";
+import {
   insertUserService,
   updateUserService,
   deleteUserService,
@@ -26,4 +30,6 @@ export {
   getAllCategoriesService,
   getPropertiesByCategoryService,
   getCategoryByNameService,
+  insertRealEstateService,
+  getAllRealEstate,
 };
