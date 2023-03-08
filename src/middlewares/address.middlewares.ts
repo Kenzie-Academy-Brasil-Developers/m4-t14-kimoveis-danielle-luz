@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { AppError } from "../errors";
-import { findRepeatedAddressService } from "../services/address.service";
+import { findRepeatedAddressService } from "../services"; 
 
 const findRepeatedAddressMiddleware = async (
   request: Request,

@@ -1,3 +1,4 @@
+import { findRepeatedAddressService } from "./address.service";
 import {
   getAllCategoriesService,
   getCategoryByNameService,
@@ -32,4 +33,5 @@ export {
   getCategoryByNameService,
   insertRealEstateService,
   getAllRealEstateService,
+  findRepeatedAddressService,
 };
