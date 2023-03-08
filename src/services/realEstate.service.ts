@@ -34,10 +34,21 @@ const insertRealEstateService = async (
 const getAllRealEstateService = async () => {
   const realEstateRepo = AppDataSource.getRepository(RealEstate);
 
-  const allRealEstate = await realEstateRepo.find();
+  const allRealEstate = await realEstateRepo
+    .createQueryBuilder("realEstate")
+    .leftJoinAndMapOne(
+      "realEstate.address",
+      Address,
+      "address",
+      "realEstate.addressId = address.id"
+    )
+    .getMany();
 
-  return allRealEstate;
+  return allRealEstate.map((estate) => {
+    estate.value += "";
 
+    return estate;
+  });
 };
 
 export { insertRealEstateService, getAllRealEstateService };

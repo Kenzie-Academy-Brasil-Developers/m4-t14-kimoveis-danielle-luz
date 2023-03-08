@@ -18,8 +18,6 @@ const errorHandler = (
   response: Response,
   next: NextFunction
 ) => {
-  console.error(error.stack);
-
   if (error instanceof AppError) {
     return response.status(error.statusCode).send({ message: error.message });
   } else if (error instanceof ZodError) {

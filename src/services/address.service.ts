@@ -14,7 +14,7 @@ const findRepeatedAddressService = async (
       number: number as string | FindOperator<string>,
       ...restAddressProperties,
     });
-
+    
     return foundAddress;
   }
 
