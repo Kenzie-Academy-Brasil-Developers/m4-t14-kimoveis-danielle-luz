@@ -1,7 +1,9 @@
 import {
+  AfterLoad,
   Column,
   CreateDateColumn,
   Entity,
+  JoinColumn,
   ManyToOne,
   OneToMany,
   OneToOne,
@@ -26,16 +28,17 @@ class RealEstate {
   @Column({ type: "integer" })
   size: number;
 
-  @CreateDateColumn()
+  @CreateDateColumn({ type: "date" })
   createdAt: Date;
 
-  @UpdateDateColumn()
+  @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
   @ManyToOne(() => Category, { nullable: true })
   category: Category;
 
   @OneToOne(() => Address)
+  @JoinColumn()
   address: Address;
 
   @OneToMany(() => Schedule, (schedule) => schedule.realEstate)

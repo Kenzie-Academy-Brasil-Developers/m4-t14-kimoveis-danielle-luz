@@ -1,9 +1,14 @@
+import { findRepeatedAddressService } from "./address.service";
 import {
   getAllCategoriesService,
   getCategoryByNameService,
   getPropertiesByCategoryService,
   insertCategoryService,
 } from "./categories.service";
+import {
+  getAllRealEstateService,
+  insertRealEstateService,
+} from "./realEstate.service";
 import {
   insertUserService,
   updateUserService,
@@ -26,4 +31,7 @@ export {
   getAllCategoriesService,
   getPropertiesByCategoryService,
   getCategoryByNameService,
+  insertRealEstateService,
+  getAllRealEstateService,
+  findRepeatedAddressService,
 };

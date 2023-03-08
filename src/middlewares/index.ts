@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { ZodTypeAny } from "zod";
+import { findRepeatedAddressMiddleware } from "./address.middlewares";
 import { findCategoryByNameMiddleware } from "./category.middleware";
 import { validateDate, validateTime } from "./schedule.middlewares";
 import {
@@ -32,4 +33,5 @@ export {
   userIsAdminMiddleware,
   checkUpdatePermission,
   findCategoryByNameMiddleware,
+  findRepeatedAddressMiddleware,
 };
