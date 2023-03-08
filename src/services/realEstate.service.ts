@@ -37,6 +37,7 @@ const getAllRealEstateService = async () => {
   const allRealEstate = await realEstateRepo.find();
 
   return allRealEstate;
+
 };
 
 export { insertRealEstateService, getAllRealEstateService };

@@ -1,4 +1,11 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from "typeorm";
+import { RealEstate } from "./realEstate.entity";
 
 @Entity("addresses")
 class Address {
@@ -11,7 +18,7 @@ class Address {
   @Column({ length: 8 })
   zipCode: string;
 
-  @Column({ length: 6, nullable: true })
+  @Column({ length: 7, nullable: true })
   number?: string;
 
   @Column({ length: 20 })
@@ -19,6 +26,10 @@ class Address {
 
   @Column({ length: 2 })
   state: string;
+
+  @OneToOne(() => RealEstate)
+  @JoinColumn()
+  realEstate: RealEstate;
 }
 
 export { Address };
