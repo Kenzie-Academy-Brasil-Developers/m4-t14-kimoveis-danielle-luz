@@ -4,6 +4,7 @@ import {
   insertRealEstateController,
 } from "../controllers";
 import {
+  findRepeatedAddressMiddleware,
   userIsAdminMiddleware,
   validateBodyMiddleware,
   validateTokenMiddleware,
@@ -17,6 +18,7 @@ realEstateRouter.post(
   validateTokenMiddleware,
   userIsAdminMiddleware,
   validateBodyMiddleware(createRealEstateSchema),
+  findRepeatedAddressMiddleware,
   insertRealEstateController
 );
 
