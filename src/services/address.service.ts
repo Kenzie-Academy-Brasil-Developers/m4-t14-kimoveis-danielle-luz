@@ -3,7 +3,7 @@ import { AppDataSource } from "../../data-source";
 import { Address } from "../entities";
 import { createAddressInterface } from "../interfaces";
 
-const findRepeatedAddress = async (searchedAddress: createAddressInterface) => {
+const findRepeatedAddressService = async (searchedAddress: createAddressInterface) => {
   const { number, ...restAddressProperties } = searchedAddress;
   const addressRepo = AppDataSource.getRepository(Address);
 
@@ -23,4 +23,4 @@ const findRepeatedAddress = async (searchedAddress: createAddressInterface) => {
   return foundAddress;
 };
 
-export { findRepeatedAddress };
+export { findRepeatedAddressService };
