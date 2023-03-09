@@ -36,7 +36,7 @@ const insertSchenduleService = async (
   return createdSchedule;
 };
 
-const findScheduleInTheSameTime = async (
+const findScheduleInTheSameTimeService = async (
   newSchedule: createScheduleInterface,
   userScheduledId: number
 ) => {
@@ -70,3 +70,5 @@ const findScheduleInTheSameTime = async (
       "User schedule to this real estate at this date and time already exists"
     );
 };
+
+export { insertSchenduleService, findScheduleInTheSameTimeService };
