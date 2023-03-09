@@ -1,5 +1,7 @@
 import { Router } from "express";
+import { insertScheduleController } from "../controllers/schedule.controller";
 import {
+  findRealEstateByIdMiddleware,
   findScheduleInTheSameTimeMiddleware,
   validateBodyMiddleware,
   validateDate,
@@ -16,5 +18,9 @@ scheduleRouter.post(
   validateBodyMiddleware(createScheduleSchema),
   validateDate,
   validateTime,
+  findRealEstateByIdMiddleware,
   findScheduleInTheSameTimeMiddleware,
+  insertScheduleController
 );
+
+export { scheduleRouter };
