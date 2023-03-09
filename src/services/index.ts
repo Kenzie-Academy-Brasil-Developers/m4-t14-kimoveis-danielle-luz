@@ -12,6 +12,7 @@ import {
 } from "./realEstate.service";
 import {
   findScheduleInTheSameTimeService,
+  getAllScheduleByRealEstateService,
   insertScheduleService,
 } from "./schendule.service";
 import {
@@ -41,5 +42,6 @@ export {
   findRepeatedAddressService,
   findRealEstateByIdService,
   insertScheduleService,
+  getAllScheduleByRealEstateService,
   findScheduleInTheSameTimeService,
 };

@@ -32,11 +32,30 @@ const insertScheduleService = async (
     })
     .execute();
 
-  const createdScheduleSearched = scheduleRepo.findOneBy({
-    id: createdSchedule.generatedMaps[0].id,
-  });
-
   return { message: "Schedule created" };
+};
+
+const getAllScheduleByRealEstateService = async (realEstateId: number) => {
+  const scheduleRepo: scheduleRepo = AppDataSource.getRepository(Schedule);
+
+  const scheduleList = await scheduleRepo
+    .createQueryBuilder("schedules")
+    .leftJoinAndMapMany(
+      "schedules.user",
+      User,
+      "users",
+      "users.id = schedules.userId"
+    )
+    .leftJoinAndMapMany(
+      "schedules.realEstate",
+      Schedule,
+      "realEstates",
+      "realEstates.id = schedules.realEstateId"
+    )
+    .where("realEstates.id = :id", { id: realEstateId })
+    .getMany();
+
+  return scheduleList;
 };
 
 const findScheduleInTheSameTimeService = async (
@@ -74,4 +93,8 @@ const findScheduleInTheSameTimeService = async (
     );
 };
 
-export { insertScheduleService, findScheduleInTheSameTimeService };
+export {
+  insertScheduleService,
+  getAllScheduleByRealEstateService,
+  findScheduleInTheSameTimeService,
+};
