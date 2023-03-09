@@ -1,5 +1,5 @@
 import { AppDataSource } from "../../data-source";
-import { RealEstate, Schedule, User } from "../entities";
+import { Address, RealEstate, Schedule, User } from "../entities";
 import { AppError } from "../errors";
 import {
   createScheduleInterface,
@@ -40,13 +40,13 @@ const getAllScheduleByRealEstateService = async (realEstateId: number) => {
 
   const scheduleList = await scheduleRepo
     .createQueryBuilder("schedules")
-    .leftJoinAndMapMany(
+    .leftJoinAndMapOne(
       "schedules.user",
       User,
       "users",
       "users.id = schedules.userId"
     )
-    .leftJoinAndMapMany(
+    .leftJoinAndMapOne(
       "schedules.realEstate",
       Schedule,
       "realEstates",

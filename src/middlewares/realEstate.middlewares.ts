@@ -7,7 +7,7 @@ const findRealEstateByIdMiddleware = async (
   response: Response,
   next: NextFunction
 ) => {
-  const realEstateId = parseInt(request.body.realEstateId);
+  const realEstateId = parseInt(request.params.id || request.body.realEstateId);
 
   if (isNaN(realEstateId)) throw new AppError(404, "RealEstate not found");
 
