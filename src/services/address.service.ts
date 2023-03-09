@@ -1,13 +1,13 @@
 import { FindOperator } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { Address } from "../entities";
-import { createRealEstateInterface } from "../interfaces";
+import { addressRepo, createRealEstateInterface } from "../interfaces";
 
 const findRepeatedAddressService = async (
   searchedRealEstate: createRealEstateInterface
 ) => {
   const { number, ...restAddressProperties } = searchedRealEstate.address;
-  const addressRepo = AppDataSource.getRepository(Address);
+  const addressRepo: addressRepo = AppDataSource.getRepository(Address);
 
   if (number) {
     const foundAddress = await addressRepo.findOneBy({
