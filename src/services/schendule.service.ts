@@ -7,7 +7,7 @@ import {
   scheduleRepo,
 } from "../interfaces";
 
-const insertSchenduleService = async (
+const insertScheduleService = async (
   newSchedule: createScheduleInterface,
   userScheduled: User
 ) => {
@@ -30,10 +30,13 @@ const insertSchenduleService = async (
       user: userScheduled,
       realEstate: realEstateScheduled,
     })
-    .returning(["*"])
     .execute();
 
-  return createdSchedule;
+  const createdScheduleSearched = scheduleRepo.findOneBy({
+    id: createdSchedule.generatedMaps[0].id,
+  });
+
+  return { message: "Schedule created" };
 };
 
 const findScheduleInTheSameTimeService = async (
@@ -46,7 +49,7 @@ const findScheduleInTheSameTimeService = async (
     .createQueryBuilder("schedule")
     .where("schedule.date = :date", { date: newSchedule.date })
     .andWhere("schedule.hour = :hour", { hour: newSchedule.hour })
-    .andWhere("schendule.realEstateId = :realEstateId", {
+    .andWhere("schedule.realEstateId = :realEstateId", {
       realEstateId: newSchedule.realEstateId,
     })
     .getExists();
@@ -71,4 +74,4 @@ const findScheduleInTheSameTimeService = async (
     );
 };
 
-export { insertSchenduleService, findScheduleInTheSameTimeService };
+export { insertScheduleService, findScheduleInTheSameTimeService };

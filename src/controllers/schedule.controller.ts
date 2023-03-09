@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "../entities";
 import { createScheduleInterface } from "../interfaces";
-import { insertSchenduleService } from "../services";
+import { insertScheduleService } from "../services";
 
 const insertScheduleController = async (
   request: Request,
@@ -10,7 +10,7 @@ const insertScheduleController = async (
   const scheduleData = request.body as createScheduleInterface;
   const userScheduled = request.loggedUser as User;
 
-  const createdSchedule = await insertSchenduleService(
+  const createdSchedule = await insertScheduleService(
     scheduleData,
     userScheduled
   );
