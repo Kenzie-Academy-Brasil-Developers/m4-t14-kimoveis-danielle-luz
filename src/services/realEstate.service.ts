@@ -52,7 +52,7 @@ const getAllRealEstateService = async () => {
     .getMany();
 
   return allRealEstate.map((estate) => {
-    estate.value += "";
+    estate.value = parseFloat(estate.value + "").toFixed(2);
 
     return estate;
   });
