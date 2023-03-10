@@ -34,7 +34,7 @@ class RealEstate {
   @UpdateDateColumn({ type: "date" })
   updatedAt: Date;
 
-  @ManyToOne(() => Category, { nullable: true })
+  @ManyToOne(() => Category, (category) => category.properties)
   category: Category;
 
   @OneToOne(() => Address)

@@ -1,7 +1,11 @@
 import { AppDataSource } from "../../data-source";
-import { Category } from "../entities";
+import { Category, RealEstate } from "../entities";
 import { AppError } from "../errors";
-import { categoryRepo, createCategorieInterface } from "../interfaces";
+import {
+  categoryRepo,
+  createCategorieInterface,
+  realEstateRepo,
+} from "../interfaces";
 
 const insertCategoryService = async (
   newCategoryData: createCategorieInterface
@@ -31,18 +35,23 @@ const getAllCategoriesService = async () => {
 
 const getPropertiesByCategoryService = async (categoryId: number) => {
   const categoryRepo: categoryRepo = AppDataSource.getRepository(Category);
+  const realEstateRepo: realEstateRepo =
+    AppDataSource.getRepository(RealEstate);
 
   try {
     if (isNaN(categoryId)) throw new Error();
 
-    const propertiesWithCategory = (
-      await categoryRepo.findOneByOrFail({
-        id: categoryId,
-      })
-    )?.properties;
+    const categoryData = await categoryRepo.findOneByOrFail({
+      id: categoryId,
+    });
 
-    return propertiesWithCategory;
-  } catch {
+    const propertiesWithCategory = await realEstateRepo
+      .createQueryBuilder()
+      .where("realEstate.categoryId = :categoryId", { categoryId })
+      .getMany();
+
+    return { ...categoryData, realEstate: propertiesWithCategory };
+  } catch (error: any) {
     throw new AppError(404, "Category not found");
   }
 };
