@@ -1,14 +1,14 @@
-import supertest from 'supertest';
-import { DataSource, DeepPartial } from 'typeorm';
-import app from '../../../app';
-import { AppDataSource } from '../../../data-source';
-import { User } from '../../../entities';
-import { errorsMock, readUserRouteMock, tokenMock } from '../../mocks';
+import supertest from "supertest";
+import { DataSource, DeepPartial } from "typeorm";
+import app from "../../../app";
+import { AppDataSource } from "../../../../data-source";
+import { User } from "../../../entities";
+import { errorsMock, readUserRouteMock, tokenMock } from "../../mocks";
 
-describe('GET /users', () => {
+describe("GET /users", () => {
   let connection: DataSource;
 
-  const baseUrl: string = '/users';
+  const baseUrl: string = "/users";
   let readUsers: DeepPartial<Array<User>>;
 
   beforeAll(async () => {
@@ -26,10 +26,10 @@ describe('GET /users', () => {
     await connection.destroy();
   });
 
-  it('Success: Must be able list all users', async () => {
+  it("Success: Must be able list all users", async () => {
     const response = await supertest(app)
       .get(baseUrl)
-      .set('Authorization', `Bearer ${tokenMock.genToken(true, 1)}`)
+      .set("Authorization", `Bearer ${tokenMock.genToken(true, 1)}`)
       .send();
 
     const expectResults = {
@@ -57,37 +57,37 @@ describe('GET /users', () => {
     );
   });
 
-  it('Error: Must not be able list all users: Missing token', async () => {
+  it("Error: Must not be able list all users: Missing token", async () => {
     const response = await supertest(app).get(baseUrl).send();
 
     expect(response.status).toBe(errorsMock.missingBearer.status);
     expect(response.body).toStrictEqual(errorsMock.missingBearer.error);
   });
 
-  it('Error: Must not be able list all users: User not admin', async () => {
+  it("Error: Must not be able list all users: User not admin", async () => {
     const response = await supertest(app)
       .get(baseUrl)
-      .set('Authorization', `Bearer ${tokenMock.genToken(false, 1)}`)
+      .set("Authorization", `Bearer ${tokenMock.genToken(false, 1)}`)
       .send();
 
     expect(response.status).toBe(errorsMock.forbidden.status);
     expect(response.body).toStrictEqual(errorsMock.forbidden.error);
   });
 
-  it('Error: Must not be able list all users: Invalid signature', async () => {
+  it("Error: Must not be able list all users: Invalid signature", async () => {
     const response = await supertest(app)
       .get(baseUrl)
-      .set('Authorization', `Bearer ${tokenMock.invalidSignature}`)
+      .set("Authorization", `Bearer ${tokenMock.invalidSignature}`)
       .send();
 
     expect(response.status).toBe(errorsMock.invalidSignature.status);
     expect(response.body).toStrictEqual(errorsMock.invalidSignature.error);
   });
 
-  it('Error: Must not be able list all users: JWT malformed', async () => {
+  it("Error: Must not be able list all users: JWT malformed", async () => {
     const response = await supertest(app)
       .get(baseUrl)
-      .set('Authorization', `Bearer ${tokenMock.jwtMalformed}`)
+      .set("Authorization", `Bearer ${tokenMock.jwtMalformed}`)
       .send();
 
     expect(response.status).toBe(errorsMock.jwtMalformed.status);

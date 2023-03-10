@@ -1,6 +1,6 @@
-import { DeepPartial, Repository } from 'typeorm';
-import { AppDataSource } from '../../../data-source';
-import { User } from '../../../entities';
+import { DeepPartial, Repository } from "typeorm";
+import { AppDataSource } from "../../../../data-source";
+import { User } from "../../../entities";
 
 type iUserRepo = Repository<User>;
 type iUserDeepPartial = DeepPartial<User>;
@@ -19,7 +19,7 @@ const readUsers = async (): Promise<Array<User>> => {
           id: expect.any(Number),
           name,
           email,
-          password: '1234',
+          password: "1234",
           admin: expect.any(Boolean),
         };
       })

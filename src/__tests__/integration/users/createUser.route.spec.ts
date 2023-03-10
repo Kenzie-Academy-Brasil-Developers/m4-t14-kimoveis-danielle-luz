@@ -1,14 +1,14 @@
-import supertest from 'supertest';
-import { DataSource } from 'typeorm';
-import app from '../../../app';
-import { AppDataSource } from '../../../data-source';
-import { User } from '../../../entities';
-import { createUserRouteMock } from '../../mocks';
+import supertest from "supertest";
+import { DataSource } from "typeorm";
+import app from "../../../app";
+import { AppDataSource } from "../../../../data-source";
+import { User } from "../../../entities";
+import { createUserRouteMock } from "../../mocks";
 
-describe('POST /users', () => {
+describe("POST /users", () => {
   let connection: DataSource;
 
-  const baseUrl: string = '/users';
+  const baseUrl: string = "/users";
   const userRepo = AppDataSource.getRepository(User);
 
   beforeAll(async () => {
@@ -26,7 +26,7 @@ describe('POST /users', () => {
     await connection.destroy();
   });
 
-  it('Success: Must be able to create a user - Full body', async () => {
+  it("Success: Must be able to create a user - Full body", async () => {
     const response = await supertest(app)
       .post(baseUrl)
       .send(createUserRouteMock.userComplete);
@@ -79,7 +79,7 @@ describe('POST /users', () => {
     );
   });
 
-  it('Error: Must not be able to create a user - Email already exists', async () => {
+  it("Error: Must not be able to create a user - Email already exists", async () => {
     await userRepo.save(createUserRouteMock.userUnique);
 
     const response = await supertest(app)
@@ -88,7 +88,7 @@ describe('POST /users', () => {
 
     const expectResults = {
       status: 409,
-      bodyMessage: { message: 'Email already exists' },
+      bodyMessage: { message: "Email already exists" },
     };
 
     expect(response.status).toBe(expectResults.status);
@@ -96,7 +96,7 @@ describe('POST /users', () => {
     expect(response.body).toStrictEqual(expectResults.bodyMessage);
   });
 
-  it('Error: Must not be able to create a user - Invalid body', async () => {
+  it("Error: Must not be able to create a user - Invalid body", async () => {
     const response = await supertest(app)
       .post(baseUrl)
       .send(createUserRouteMock.userInvalidBody);
@@ -105,9 +105,9 @@ describe('POST /users', () => {
       status: 400,
       bodyMessage: {
         message: {
-          name: ['Expected string, received number'],
-          email: ['Expected string, received array'],
-          password: ['Required'],
+          name: ["Expected string, received number"],
+          email: ["Expected string, received array"],
+          password: ["Required"],
         },
       },
     };
@@ -116,7 +116,7 @@ describe('POST /users', () => {
     expect(response.body).toStrictEqual(expectResults.bodyMessage);
   });
 
-  it('Error: Must not be able to create a user - Invalid body 2', async () => {
+  it("Error: Must not be able to create a user - Invalid body 2", async () => {
     const response = await supertest(app)
       .post(baseUrl)
       .send(createUserRouteMock.userInvalidBody2);
@@ -125,9 +125,9 @@ describe('POST /users', () => {
       status: 400,
       bodyMessage: {
         message: {
-          name: ['String must contain at most 45 character(s)'],
-          email: ['Invalid email'],
-          password: ['Expected string, received number'],
+          name: ["String must contain at most 45 character(s)"],
+          email: ["Invalid email"],
+          password: ["Expected string, received number"],
         },
       },
     };
