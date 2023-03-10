@@ -76,6 +76,12 @@ const validateTokenMiddleware = async (
 
         request.loggedUser = foundUser;
 
+        if (decoded?.admin !== undefined && decoded?.admin === false) {
+          request.isAdmin = false;
+
+          return next();
+        }
+
         request.isAdmin = request.loggedUser?.admin || decoded?.admin;
 
         return next();

@@ -1,7 +1,8 @@
 import { AppDataSource } from "../../data-source";
-import { Address, RealEstate, Schedule, User } from "../entities";
+import { Address, Category, RealEstate, Schedule, User } from "../entities";
 import { AppError } from "../errors";
 import {
+  createRealEstateInterface,
   createScheduleInterface,
   realEstateRepo,
   scheduleRepo,
@@ -37,6 +38,25 @@ const insertScheduleService = async (
 
 const getAllScheduleByRealEstateService = async (realEstateId: number) => {
   const scheduleRepo: scheduleRepo = AppDataSource.getRepository(Schedule);
+  const realEstateRepo: realEstateRepo =
+    AppDataSource.getRepository(RealEstate);
+
+  const foundRealEstate = await realEstateRepo
+    .createQueryBuilder("realEstate")
+    .leftJoinAndMapOne(
+      "realEstate.address",
+      Address,
+      "addresses",
+      "addresses.id = realEstate.addressId"
+    )
+    .leftJoinAndMapOne(
+      "realEstate.category",
+      Category,
+      "categories",
+      "categories.id = realEstate.category"
+    )
+    .where("realEstate.id = :id", { id: realEstateId })
+    .getOne();
 
   const scheduleList = await scheduleRepo
     .createQueryBuilder("schedules")
@@ -46,16 +66,10 @@ const getAllScheduleByRealEstateService = async (realEstateId: number) => {
       "users",
       "users.id = schedules.userId"
     )
-    .leftJoinAndMapOne(
-      "schedules.realEstate",
-      Schedule,
-      "realEstates",
-      "realEstates.id = schedules.realEstateId"
-    )
-    .where("realEstates.id = :id", { id: realEstateId })
+    .where("schedules.realEstateId = :id", { id: realEstateId })
     .getMany();
 
-  return scheduleList;
+  return { ...foundRealEstate, schedules: scheduleList };
 };
 
 const findScheduleInTheSameTimeService = async (
