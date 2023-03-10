@@ -1,5 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { AppError } from "../errors";
+import { createScheduleInterface } from "../interfaces";
+import { findScheduleInTheSameTimeService } from "../services";
 
 const validateDate = (
   request: Request,
@@ -39,4 +41,17 @@ const validateTime = (
   return next();
 };
 
-export { validateDate, validateTime };
+const findScheduleInTheSameTimeMiddleware = async (
+  request: Request,
+  response: Response,
+  next: NextFunction
+) => {
+  const scheduleData = request.body as createScheduleInterface;
+  const userScheduledId = request.loggedUser?.id as number;
+
+  await findScheduleInTheSameTimeService(scheduleData, userScheduledId);
+
+  return next();
+};
+
+export { validateDate, validateTime, findScheduleInTheSameTimeMiddleware };

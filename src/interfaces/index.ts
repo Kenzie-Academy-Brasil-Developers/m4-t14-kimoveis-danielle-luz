@@ -1,7 +1,10 @@
-import { createAddressInterface } from "./address.interfaces";
+import { createAddressInterface, addressRepo } from "./address.interfaces";
 import { createCategorieInterface, categoryRepo } from "./categorie.interfaces";
-import { createRealEstateInterface } from "./realEstate.interfaces";
-import { createScheduleInterface } from "./schedule.interfaces";
+import {
+  createRealEstateInterface,
+  realEstateRepo,
+} from "./realEstate.interfaces";
+import { createScheduleInterface, scheduleRepo } from "./schedule.interfaces";
 import {
   getUserInterface,
   createUserInterface,
@@ -25,4 +28,7 @@ export {
   loginInterface,
   token,
   userRepo,
+  scheduleRepo,
+  realEstateRepo,
+  addressRepo,
 };

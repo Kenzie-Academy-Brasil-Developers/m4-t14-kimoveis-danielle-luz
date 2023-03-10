@@ -7,6 +7,7 @@ import {
   getAllRealEstateController,
   insertRealEstateController,
 } from "./realEstate.controller";
+import { getAllScheduleByRealEstateController } from "./schedule.controller";
 import {
   insertUserController,
   updateUserController,
@@ -26,4 +27,5 @@ export {
   getPropertiesByCategoryController,
   insertRealEstateController,
   getAllRealEstateController,
+  getAllScheduleByRealEstateController,
 };

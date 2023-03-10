@@ -6,9 +6,15 @@ import {
   insertCategoryService,
 } from "./categories.service";
 import {
+  findRealEstateByIdService,
   getAllRealEstateService,
   insertRealEstateService,
 } from "./realEstate.service";
+import {
+  findScheduleInTheSameTimeService,
+  getAllScheduleByRealEstateService,
+  insertScheduleService,
+} from "./schendule.service";
 import {
   insertUserService,
   updateUserService,
@@ -34,4 +40,8 @@ export {
   insertRealEstateService,
   getAllRealEstateService,
   findRepeatedAddressService,
+  findRealEstateByIdService,
+  insertScheduleService,
+  getAllScheduleByRealEstateService,
+  findScheduleInTheSameTimeService,
 };

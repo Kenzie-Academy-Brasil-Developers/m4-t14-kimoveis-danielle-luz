@@ -2,7 +2,12 @@ import { NextFunction, Request, Response } from "express";
 import { ZodTypeAny } from "zod";
 import { findRepeatedAddressMiddleware } from "./address.middlewares";
 import { findCategoryByNameMiddleware } from "./category.middleware";
-import { validateDate, validateTime } from "./schedule.middlewares";
+import { findRealEstateByIdMiddleware } from "./realEstate.middlewares";
+import {
+  findScheduleInTheSameTimeMiddleware,
+  validateDate,
+  validateTime,
+} from "./schedule.middlewares";
 import {
   findUserByEmailMiddleware,
   findUserByIdMiddleware,
@@ -34,4 +39,6 @@ export {
   checkUpdatePermission,
   findCategoryByNameMiddleware,
   findRepeatedAddressMiddleware,
+  findRealEstateByIdMiddleware,
+  findScheduleInTheSameTimeMiddleware,
 };

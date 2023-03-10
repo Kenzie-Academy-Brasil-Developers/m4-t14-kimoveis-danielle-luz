@@ -1,14 +1,20 @@
 import { DeepPartial } from "typeorm";
 import { AppDataSource } from "../../data-source";
 import { Address, Category, RealEstate } from "../entities";
-import { createRealEstateInterface } from "../interfaces";
+import {
+  addressRepo,
+  categoryRepo,
+  createRealEstateInterface,
+  realEstateRepo,
+} from "../interfaces";
 
 const insertRealEstateService = async (
   newRealEstateData: createRealEstateInterface
 ) => {
-  const realEstateRepo = AppDataSource.getRepository(RealEstate);
-  const addressRepo = AppDataSource.getRepository(Address);
-  const categoryRepo = AppDataSource.getRepository(Category);
+  const realEstateRepo: realEstateRepo =
+    AppDataSource.getRepository(RealEstate);
+  const addressRepo: addressRepo = AppDataSource.getRepository(Address);
+  const categoryRepo: categoryRepo = AppDataSource.getRepository(Category);
 
   const newAddress = await addressRepo.save(
     addressRepo.create([newRealEstateData.address] as DeepPartial<Address>[])
@@ -32,7 +38,8 @@ const insertRealEstateService = async (
 };
 
 const getAllRealEstateService = async () => {
-  const realEstateRepo = AppDataSource.getRepository(RealEstate);
+  const realEstateRepo: realEstateRepo =
+    AppDataSource.getRepository(RealEstate);
 
   const allRealEstate = await realEstateRepo
     .createQueryBuilder("realEstate")
@@ -51,4 +58,17 @@ const getAllRealEstateService = async () => {
   });
 };
 
-export { insertRealEstateService, getAllRealEstateService };
+const findRealEstateByIdService = async (realEstateId: number) => {
+  const realEstateRepo: realEstateRepo =
+    AppDataSource.getRepository(RealEstate);
+
+  const foundRealEstate = await realEstateRepo.findOneBy({ id: realEstateId });
+
+  return foundRealEstate;
+};
+
+export {
+  insertRealEstateService,
+  getAllRealEstateService,
+  findRealEstateByIdService,
+};
