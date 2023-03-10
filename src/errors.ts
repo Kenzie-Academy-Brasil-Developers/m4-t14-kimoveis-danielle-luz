@@ -23,7 +23,6 @@ const errorHandler = (
   } else if (error instanceof ZodError) {
     return response.status(400).send({ message: error.flatten().fieldErrors });
   } else if (error) {
-    console.log(error.stack);
     return response.status(500).send({ message: "Internal server error" });
   }
 
