@@ -8,7 +8,12 @@ import {
   createRealEstateInterface,
   realEstateRepo,
 } from "./realEstate.interfaces";
-import { createScheduleInterface, scheduleRepo } from "./schedule.interfaces";
+import {
+  createScheduleInterface,
+  scheduleMessage,
+  scheduleRepo,
+  scheduleWithPropertyData,
+} from "./schedule.interfaces";
 import {
   getUserInterface,
   createUserInterface,
@@ -36,4 +41,6 @@ export {
   realEstateRepo,
   addressRepo,
   propertyWithCategoryData,
+  scheduleMessage,
+  scheduleWithPropertyData,
 };
