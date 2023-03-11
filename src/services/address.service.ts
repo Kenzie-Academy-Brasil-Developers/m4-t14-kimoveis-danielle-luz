@@ -5,7 +5,7 @@ import { addressRepo, createRealEstateInterface } from "../interfaces";
 
 const findRepeatedAddressService = async (
   searchedRealEstate: createRealEstateInterface
-) => {
+): Promise<Address | null> => {
   const { number, ...restAddressProperties } = searchedRealEstate.address;
   const addressRepo: addressRepo = AppDataSource.getRepository(Address);
 
@@ -14,7 +14,7 @@ const findRepeatedAddressService = async (
       number: number as string | FindOperator<string>,
       ...restAddressProperties,
     });
-    
+
     return foundAddress;
   }
 

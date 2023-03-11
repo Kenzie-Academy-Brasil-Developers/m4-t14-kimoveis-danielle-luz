@@ -1,10 +1,19 @@
 import { createAddressInterface, addressRepo } from "./address.interfaces";
-import { createCategorieInterface, categoryRepo } from "./categorie.interfaces";
+import {
+  createCategorieInterface,
+  categoryRepo,
+  propertyWithCategoryData,
+} from "./categorie.interfaces";
 import {
   createRealEstateInterface,
   realEstateRepo,
 } from "./realEstate.interfaces";
-import { createScheduleInterface, scheduleRepo } from "./schedule.interfaces";
+import {
+  createScheduleInterface,
+  scheduleMessage,
+  scheduleRepo,
+  scheduleWithPropertyData,
+} from "./schedule.interfaces";
 import {
   getUserInterface,
   createUserInterface,
@@ -13,6 +22,7 @@ import {
   loginInterface,
   token,
   userRepo,
+  tokenReturn,
 } from "./user.interfaces";
 
 export {
@@ -31,4 +41,8 @@ export {
   scheduleRepo,
   realEstateRepo,
   addressRepo,
+  propertyWithCategoryData,
+  scheduleMessage,
+  scheduleWithPropertyData,
+  tokenReturn,
 };
