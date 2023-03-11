@@ -1,5 +1,9 @@
 import { createAddressInterface, addressRepo } from "./address.interfaces";
-import { createCategorieInterface, categoryRepo } from "./categorie.interfaces";
+import {
+  createCategorieInterface,
+  categoryRepo,
+  propertyWithCategoryData,
+} from "./categorie.interfaces";
 import {
   createRealEstateInterface,
   realEstateRepo,
@@ -31,4 +35,5 @@ export {
   scheduleRepo,
   realEstateRepo,
   addressRepo,
+  propertyWithCategoryData,
 };
