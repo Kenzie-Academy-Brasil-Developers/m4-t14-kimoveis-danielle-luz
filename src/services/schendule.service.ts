@@ -5,13 +5,15 @@ import {
   createRealEstateInterface,
   createScheduleInterface,
   realEstateRepo,
+  scheduleMessage,
   scheduleRepo,
+  scheduleWithPropertyData,
 } from "../interfaces";
 
 const insertScheduleService = async (
   newSchedule: createScheduleInterface,
   userScheduled: User
-) => {
+): Promise<scheduleMessage> => {
   const { realEstateId, ...scheduleTime } = newSchedule;
 
   const scheduleRepo: scheduleRepo = AppDataSource.getRepository(Schedule);
@@ -36,7 +38,9 @@ const insertScheduleService = async (
   return { message: "Schedule created" };
 };
 
-const getAllScheduleByRealEstateService = async (realEstateId: number) => {
+const getAllScheduleByRealEstateService = async (
+  realEstateId: number
+): Promise<scheduleWithPropertyData> => {
   const scheduleRepo: scheduleRepo = AppDataSource.getRepository(Schedule);
   const realEstateRepo: realEstateRepo =
     AppDataSource.getRepository(RealEstate);
@@ -75,7 +79,7 @@ const getAllScheduleByRealEstateService = async (realEstateId: number) => {
 const findScheduleInTheSameTimeService = async (
   newSchedule: createScheduleInterface,
   userScheduledId: number
-) => {
+): Promise<void> => {
   const scheduleRepo: scheduleRepo = AppDataSource.getRepository(Schedule);
 
   const foundScheduleWithSameTime = await scheduleRepo

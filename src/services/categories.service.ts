@@ -4,12 +4,13 @@ import { AppError } from "../errors";
 import {
   categoryRepo,
   createCategorieInterface,
+  propertyWithCategoryData,
   realEstateRepo,
 } from "../interfaces";
 
 const insertCategoryService = async (
   newCategoryData: createCategorieInterface
-) => {
+): Promise<Category | null> => {
   const categoryRepo: categoryRepo = AppDataSource.getRepository(Category);
 
   await categoryRepo
@@ -25,7 +26,7 @@ const insertCategoryService = async (
   return foundCategory;
 };
 
-const getAllCategoriesService = async () => {
+const getAllCategoriesService = async (): Promise<Category[]> => {
   const categoryRepo: categoryRepo = AppDataSource.getRepository(Category);
 
   const allCategories = await categoryRepo.find();
@@ -33,7 +34,9 @@ const getAllCategoriesService = async () => {
   return allCategories;
 };
 
-const getPropertiesByCategoryService = async (categoryId: number) => {
+const getPropertiesByCategoryService = async (
+  categoryId: number
+): Promise<propertyWithCategoryData> => {
   const categoryRepo: categoryRepo = AppDataSource.getRepository(Category);
   const realEstateRepo: realEstateRepo =
     AppDataSource.getRepository(RealEstate);
@@ -50,13 +53,20 @@ const getPropertiesByCategoryService = async (categoryId: number) => {
       .where("realEstate.categoryId = :categoryId", { categoryId })
       .getMany();
 
-    return { ...categoryData, realEstate: propertiesWithCategory };
+    const propertyWithCategoryData: propertyWithCategoryData = {
+      ...categoryData,
+      realEstate: propertiesWithCategory,
+    };
+
+    return propertyWithCategoryData;
   } catch (error: any) {
     throw new AppError(404, "Category not found");
   }
 };
 
-const getCategoryByNameService = async (categoryName: string) => {
+const getCategoryByNameService = async (
+  categoryName: string
+): Promise<Category | null> => {
   const categoryRepo: categoryRepo = AppDataSource.getRepository(Category);
 
   const foundCategory = await categoryRepo.findOneBy({ name: categoryName });

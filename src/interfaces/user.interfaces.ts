@@ -1,9 +1,17 @@
 import { Repository } from "typeorm";
 import { z } from "zod";
 import { User } from "../entities";
-import { createUserSchema, getUserSchema, loginSchema, updateUserSchema } from "../schemas";
+import {
+  createUserSchema,
+  getUserSchema,
+  loginSchema,
+  updateUserSchema,
+} from "../schemas";
 
-type getUserInterface = z.infer<typeof getUserSchema>;
+type getUserInterface = Omit<
+  z.infer<typeof getUserSchema> & { id: number },
+  "password"
+>;
 type createUserInterface = z.infer<typeof createUserSchema>;
 type updateUserInterface = z.infer<typeof updateUserSchema>;
 type loginInterface = z.infer<typeof loginSchema>;
@@ -20,6 +28,10 @@ interface token {
   sub: string;
 }
 
+interface tokenReturn {
+  token: string;
+}
+
 export {
   getUserInterface,
   createUserInterface,
@@ -28,4 +40,5 @@ export {
   selectUserInterface,
   token,
   userRepo,
+  tokenReturn,
 };

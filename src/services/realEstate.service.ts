@@ -10,7 +10,7 @@ import {
 
 const insertRealEstateService = async (
   newRealEstateData: createRealEstateInterface
-) => {
+): Promise<RealEstate> => {
   const realEstateRepo: realEstateRepo =
     AppDataSource.getRepository(RealEstate);
   const addressRepo: addressRepo = AppDataSource.getRepository(Address);
@@ -37,7 +37,7 @@ const insertRealEstateService = async (
   return newRealEstate;
 };
 
-const getAllRealEstateService = async () => {
+const getAllRealEstateService = async (): Promise<RealEstate[]> => {
   const realEstateRepo: realEstateRepo =
     AppDataSource.getRepository(RealEstate);
 
@@ -58,7 +58,9 @@ const getAllRealEstateService = async () => {
   });
 };
 
-const findRealEstateByIdService = async (realEstateId: number) => {
+const findRealEstateByIdService = async (
+  realEstateId: number
+): Promise<RealEstate | null> => {
   const realEstateRepo: realEstateRepo =
     AppDataSource.getRepository(RealEstate);
 
