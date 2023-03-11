@@ -3,7 +3,9 @@ import { User } from "../entities";
 import { compare, hash } from "bcryptjs";
 import {
   createUserInterface,
+  getUserInterface,
   loginInterface,
+  tokenReturn,
   updateUserInterface,
   userRepo,
 } from "../interfaces";
@@ -11,7 +13,9 @@ import { AppError } from "../errors";
 import { sign } from "jsonwebtoken";
 import "dotenv/config";
 
-const insertUserService = async (newUserData: createUserInterface) => {
+const insertUserService = async (
+  newUserData: createUserInterface
+): Promise<getUserInterface> => {
   const userRepository: userRepo = AppDataSource.getRepository(User);
 
   const encryptedPassword = await hash(newUserData.password, 10);
@@ -31,13 +35,13 @@ const insertUserService = async (newUserData: createUserInterface) => {
 
   const { password, ...userWithoutPassword } = userAfterInsert as User;
 
-  return userWithoutPassword;
+  return userWithoutPassword as getUserInterface;
 };
 
 const updateUserService = async (
   updatedUserId: number,
   updatedUserData: updateUserInterface
-) => {
+): Promise<getUserInterface> => {
   const userRepository: userRepo = AppDataSource.getRepository(User);
 
   const updatedDataWithId = { id: updatedUserId, ...updatedUserData };
@@ -51,7 +55,7 @@ const updateUserService = async (
   return userWithoutPassword;
 };
 
-const deleteUserService = async (deletedUserId: number) => {
+const deleteUserService = async (deletedUserId: number): Promise<void> => {
   const userRepository: userRepo = AppDataSource.getRepository(User);
 
   const deletedUser = await userRepository.findOne({
@@ -64,7 +68,9 @@ const deleteUserService = async (deletedUserId: number) => {
   }
 };
 
-const loginService = async (loginData: loginInterface) => {
+const loginService = async (
+  loginData: loginInterface
+): Promise<tokenReturn> => {
   const userRepository = AppDataSource.getRepository(User);
 
   const { email: loginEmail, password: loginPassword } = loginData;
@@ -93,7 +99,9 @@ const loginService = async (loginData: loginInterface) => {
   return { token };
 };
 
-const findUserByEmailService = async (searchedEmail: string) => {
+const findUserByEmailService = async (
+  searchedEmail: string
+): Promise<User | null> => {
   const userRepository: userRepo = AppDataSource.getRepository(User);
 
   const foundUser = await userRepository.findOneBy({ email: searchedEmail });
@@ -101,7 +109,9 @@ const findUserByEmailService = async (searchedEmail: string) => {
   return foundUser;
 };
 
-const findUserByIdService = async (searchedId: number) => {
+const findUserByIdService = async (
+  searchedId: number
+): Promise<User | null> => {
   const userRepository: userRepo = AppDataSource.getRepository(User);
 
   const foundUser = await userRepository.findOneBy({ id: searchedId });
@@ -109,7 +119,7 @@ const findUserByIdService = async (searchedId: number) => {
   return foundUser;
 };
 
-const getAllUsersService = async () => {
+const getAllUsersService = async (): Promise<User[]> => {
   const userRepository: userRepo = AppDataSource.getRepository(User);
 
   let allUsers = await userRepository.find({

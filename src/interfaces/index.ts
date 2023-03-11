@@ -22,6 +22,7 @@ import {
   loginInterface,
   token,
   userRepo,
+  tokenReturn,
 } from "./user.interfaces";
 
 export {
@@ -43,4 +44,5 @@ export {
   propertyWithCategoryData,
   scheduleMessage,
   scheduleWithPropertyData,
+  tokenReturn,
 };
